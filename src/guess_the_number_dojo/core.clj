@@ -1,9 +1,8 @@
 (ns guess-the-number-dojo.core (:gen-class))
 
-
 (defn ask-for-feedback []
   (loop
-      []
+   []
     (println "Tell me am I right (y)es, or is your number l(ower), h(higher) than my guess? ")
     (let [line  (read-line)]
       (cond (re-matches #"y|h|l" line) line
@@ -12,14 +11,14 @@
 ;; guesses so far to be added
 (defn guess-to-limit [lowbound highbound counter]
   (let
-    [guess (quot (+ lowbound highbound) 2)
-     _ (println "My guess is " guess)
-     feedback (ask-for-feedback)]
+   [guess (quot (+ lowbound highbound) 2)
+    _ (println "My guess is " guess)
+    feedback (ask-for-feedback)]
     (cond (= feedback "y") counter
           (= highbound lowbound) (do  (println "Cheater! I'm not playing anymore!") -1)
           :default (let
-           [[new-higher new-lower] (if (= feedback "h") [highbound (inc guess)] [guess lowbound])]
-         (recur new-lower new-higher (inc counter))))))
+                    [[new-higher new-lower] (if (= feedback "h") [highbound (inc guess)] [guess lowbound])]
+                     (recur new-lower new-higher (inc counter))))))
 
 (defn player-as-chooser "" [limit]
   (println "Choose a whole number from 1 to" limit "and I will guess")
@@ -31,18 +30,18 @@
       (println "got it in" counter "guesses")
       (println "I'm going home"))))
 
-(def player-as-guesser)
+(defn player-as-guesser [] nil)
 
 (defn -main
   [& args]
-  (player-as-chooser 10)
+
   (loop
-      []
-    (println "Would you like to (g)uess or (c)hoose?")
+   []
+    (println "Would you like to (g)uess or (c)hoose or (q)uit?")
     (let [line  (read-line)]
       (cond
         (re-matches #"g|c" line)
-        (if (= line "c" (player-as-chooser 10)
-               (player-as-guesser)))
-            :default (recur)))))
+        (if (= line "c") (player-as-chooser 100)
+            (player-as-guesser))
+        :default (recur)))))
 
