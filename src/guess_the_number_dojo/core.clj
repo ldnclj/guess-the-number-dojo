@@ -15,9 +15,9 @@
     [guess (quot (+ lowbound highbound) 2)
      _ (println "My guess is " guess)
      feedback (ask-for-feedback)]
-     (if (= feedback "y")
-       counter
-       (let
+    (cond (= feedback "y") counter
+          (= highbound lowbound) (do  (println "Cheater! I'm not playing anymore!") -1)
+          :default (let
            [[new-higher new-lower] (if (= feedback "h") [highbound (inc guess)] [guess lowbound])]
          (recur new-lower new-higher (inc counter))))))
 
@@ -27,7 +27,9 @@
   (println "Hit enter when ready")
   (read-line)
   (let [counter (guess-to-limit 1 limit 1)]
-    (println "got it in" counter "guesses")))
+    (if (> counter 0)
+      (println "got it in" counter "guesses")
+      (println "I'm going home"))))
 
 (defn -main
   [& args]
