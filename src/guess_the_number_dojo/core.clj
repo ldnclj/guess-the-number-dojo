@@ -3,7 +3,7 @@
 
 (defn ask-for-feedback []
   (loop
-   []
+      []
     (println "Tell me am I right (y)es, or is your number l(ower), h(higher) than my guess? ")
     (let [line  (read-line)]
       (cond (re-matches #"y|h|l" line) line
@@ -31,7 +31,18 @@
       (println "got it in" counter "guesses")
       (println "I'm going home"))))
 
+(def player-as-guesser)
+
 (defn -main
   [& args]
-  (player-as-chooser 10))
+  (player-as-chooser 10)
+  (loop
+      []
+    (println "Would you like to (g)uess or (c)hoose?")
+    (let [line  (read-line)]
+      (cond
+        (re-matches #"g|c" line)
+        (if (= line "c" (player-as-chooser 10)
+               (player-as-guesser)))
+            :default (recur)))))
 
