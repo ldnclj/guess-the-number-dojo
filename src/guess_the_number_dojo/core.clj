@@ -51,7 +51,8 @@
       (cond
         (re-matches #"g|c" line)
         (if (= line "c") (player-as-chooser 100)
-            (play-as-guesser (read-line) ))
+            (do (println "Guess a number from 1 to 100")
+                (play-as-guesser (read-line) )))
         :default (recur)))))
 
 ;(println "Enter a number between 1 and 100:")
