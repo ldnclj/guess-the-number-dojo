@@ -30,11 +30,20 @@
       (println "got it in" counter "guesses")
       (println "I'm going home"))))
 
-(defn player-as-guesser [] nil)
+(defn play-as-guesser "Guess the number." [n]
+   (let [bulls-eye (inc (rand-nth (range 100)))]
+     (loop [current-input (Integer. n)]
+
+       (if (= current-input bulls-eye)
+           (println "Bulls eye!")
+        (do
+         (if (> current-input bulls-eye)
+             (println "Number entered is too big. Go lower:")
+             (println "Number entered is too low. Go higher:"))
+         (recur (Integer. (read-line))))))))
 
 (defn -main
   [& args]
-
   (loop
    []
     (println "Would you like to (g)uess or (c)hoose or (q)uit?")
@@ -42,6 +51,7 @@
       (cond
         (re-matches #"g|c" line)
         (if (= line "c") (player-as-chooser 100)
-            (player-as-guesser))
+            (play-as-guesser (read-line) ))
         :default (recur)))))
 
+;(println "Enter a number between 1 and 100:")
